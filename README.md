@@ -1,70 +1,107 @@
-# Getting Started with Create React App
+# Frontend generatora zadań
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Pobranie projektu na własny komputer
 
-## Available Scripts
+1. Utwórz lub przejdź do katalogu, w którym chcesz umieścić projekt.
 
-In the project directory, you can run:
+2. Sklonuj repozytorium:
+   `git clone git@github.com:KevinKaluzny/Algo_platforma_WAT--frontend.git`
 
-### `npm start`
+## Sklonuj repozytorium:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Aby uruchomić projekt lokalnie, wymagany jest zainstalowany Node.js.
+Jeśli nie masz go zainstalowanego, pobierz go z oficjalnej strony:
+👉 https://nodejs.org/en/download/current.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Instalacja paczek:
+   `npm install`
 
-### `npm test`
+2. Uruchomienie aplikacji oraz symulowanego serwera:
+   `yarn start`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   Aplikacja uruchomi się domyślnie pod adresem:
+	 `http://localhost:3000`
 
-### `npm run build`
+	 Symulowany serwer (json-server) działa na porcie:
+	 `http://localhost:3131`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Zatrzymanie aplikacji i serwera:
+   `Ctrl + C`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Praca zespołowa
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+W celu zachowania porządku w repozytorium oraz usprawnienia współpracy zalecane jest stosowanie Gitflow Workflow.
 
-### `npm run eject`
+Gitflow zakłada m.in.:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- oddzielną gałąź main (wersja produkcyjna),
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- gałąź develop (wersja rozwojowa),
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- tworzenie osobnych gałęzi dla nowych funkcjonalności (feature/*),
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- pull requesty przed mergowaniem zmian.
 
-## Learn More
+Więcej informacji na temat Gitflow:
+👉 https://nulab.com/learn/software-development/git-tutorial/git-collaboration/branching-workflows/gitflow-workflow/
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Architektura projektu
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Projekt jest aplikacją typu SPA (Single Page Application) stworzoną w oparciu o React.
 
-### Code Splitting
+### Główne technologie
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **React** – budowa interfejsu użytkownika
 
-### Analyzing the Bundle Size
+- **React Router** – obsługa routingu (nawigacja bez przeładowania strony)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Redux** – zarządzanie globalnym stanem aplikacji
 
-### Making a Progressive Web App
+- **Axios** – komunikacja z API (zapytania HTTP POST/GET)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **Material UI (MUI)** – komponenty interfejsu użytkownika
 
-### Advanced Configuration
+- **json-server** – symulacja backendu
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **SCSS Modules** – stylowanie komponentów
 
-### Deployment
+- **Yarn** - konkurencyjny menedżer paczek, który jest nieco szybszy od NPM
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **Jest** - testy jednostkowe
 
-### `npm run build` fails to minify
+### Struktura projektu
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    /src
+      /components      → komponenty aplikacji (Generator, Parameters, Results itd.)
+      /redux           → konfiguracja store i slice'y
+      /styles          → pliki stylów
+      App.js           → konfiguracja routingu
+      index.js         → punkt wejścia aplikacji
+
+    /db
+      server.json      → symulowana baza danych (json-server)
+
+    /public
+      index.html       → główny plik HTML
+      assets           → statyczne zasoby
+
+### Ważna informacja techniczna
+
+Folder db znajduje się w katalogu głównym projektu (a nie w public).
+Pozwala to uniknąć niepożądanego przeładowywania aplikacji przez React Dev Server podczas modyfikacji pliku server.json.
+
+### Mechanizm działania generatora
+
+1. Użytkownik wprowadza dane w formularzu.
+
+2. Kliknięcie przycisku powoduje:
+
+   - wysłanie zapytania POST z parametrami do symulowanego serwera,
+
+   - następnie wykonanie zapytania GET w celu pobrania wygenerowanych wyników.
+
+3. Otrzymane dane są zapisywane w Redux store.
+
+4. Komponent Results pobiera dane ze store i renderuje je w interfejsie.
+
+Całość działa bez przeładowania strony, zgodnie z architekturą SPA.
