@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
-import App from './App';
+import Logo from './Logo';
 
-describe('Component App', () => {
+describe('Component Logo', () => {
   it('should render without crashing', () => {
-    render(<App />);
+    render(<Logo />);
   });
 });

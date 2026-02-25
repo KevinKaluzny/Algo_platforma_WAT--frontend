@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
-import App from './App';
+import NavBar from './NavBar';
 
-describe('Component App', () => {
+describe('Component NavBar', () => {
   it('should render without crashing', () => {
-    render(<App />);
+    render(<NavBar />);
   });
 });
